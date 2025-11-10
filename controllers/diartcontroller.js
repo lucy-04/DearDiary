@@ -1,4 +1,5 @@
 // controllers/diaryController.js
+require('dotenv').config();
 const client = require('../config/db');
 const axios = require('axios');
 const { getCurrentTimestamp } = require("../utils/timeStampHelper.js");
@@ -204,8 +205,9 @@ exports.detectEmotion = async (req, res, next) => {
   }
   
   try {
-    // Call Python Flask model at localhost:8000 (updated port)
-    const response = await axios.post('http://localhost:8000/predict', {
+    // Call Python Flask model using env variable
+    const flaskUrl = process.env.AI_MODEL_API_URL || 'http://localhost:5000/predict';
+    const response = await axios.post(flaskUrl, {
       text: text
     }, {
       headers: {
@@ -213,7 +215,6 @@ exports.detectEmotion = async (req, res, next) => {
       },
       timeout: 10000 // 10 second timeout
     });
-    
     res.status(200).json({
       success: true,
       data: {
@@ -224,7 +225,6 @@ exports.detectEmotion = async (req, res, next) => {
     });
   } catch (error) {
     console.error('Emotion detection error:', error.message);
-    
     // Return a fallback response if the model service is unavailable
     res.status(200).json({
       success: true,
