@@ -12,11 +12,11 @@ exports.getAllEntries = async (req,res,next) => {
             'SELECT * FROM diary_entries WHERE user_id = $1 ORDER BY entry_date DESC',
             [userId]
         )
-        res.send(200).json({
+        res.status(200).json({
             success : true,
             count: entries.rows.length,
             data: entries.rows
-    });
+        });
   } catch (error) {
     next(error);
   }
@@ -31,11 +31,11 @@ exports.getEntry = async (req,res,next) => {
             'SELECT * FROM diary_entries WHERE user_id = $1 AND id = $2 ORDER BY entry_date DESC',
             [userId,id]
         )
-        res.send(200).json({
+        res.status(200).json({
             success : true,
             count: entries.rows.length,
             data: entries.rows
-    });
+        });
   } catch (error) {
     next(error);
   }
@@ -50,9 +50,9 @@ exports.deleteEntry = async (req,res,next) => {
             'DELETE FROM diary_entries WHERE user_id = $1 AND id = $2',
             [user_Id, id]
         )
-        res.send(200).json({
+        res.status(200).json({
             success: true,
-            message: 'field deleted successfully'
+            message: 'Entry deleted successfully'
         });
     } catch( error ){
         next(error);
@@ -191,3 +191,49 @@ function getMoodColor(mood) {
   
   return moodColors[mood.toLowerCase()] || '#808080';
 }
+
+// Emotion detection endpoint that calls Python Flask service
+exports.detectEmotion = async (req, res, next) => {
+  const { text } = req.body;
+  
+  if (!text || !text.trim()) {
+    return res.status(400).json({
+      success: false,
+      message: 'Text is required for emotion detection'
+    });
+  }
+  
+  try {
+    // Call Python Flask model at localhost:8000 (updated port)
+    const response = await axios.post('http://localhost:8000/predict', {
+      text: text
+    }, {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      timeout: 10000 // 10 second timeout
+    });
+    
+    res.status(200).json({
+      success: true,
+      data: {
+        prediction: response.data.prediction,
+        probabilities: response.data.probabilities,
+        text: response.data.text
+      }
+    });
+  } catch (error) {
+    console.error('Emotion detection error:', error.message);
+    
+    // Return a fallback response if the model service is unavailable
+    res.status(200).json({
+      success: true,
+      data: {
+        prediction: 'neutral',
+        probabilities: { neutral: 1.0 },
+        text: text,
+        note: 'Emotion detection service unavailable, using default'
+      }
+    });
+  }
+};
