@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dear Diary ✨ | Your Digital Sanctuary</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+<body class="final-polish performance-optimized">
+    <!-- Animated Background -->
+    <div class="animated-background">
+        <div class="floating-particles">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+        </div>
+        <div class="gradient-orbs">
+            <div class="orb orb-1"></div>
+            <div class="orb orb-2"></div>
+            <div class="orb orb-3"></div>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Header -->
+        <header class="main-header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <div class="logo">
+                        <i class="fas fa-book-open logo-icon"></i>
+                        <h1 class="logo-text">Dear Diary</h1>
+                    </div>
+                    <p class="tagline">Your personal sanctuary for thoughts and memories</p>
+                    <div class="current-date-display" id="current-date"></div>
+                    <button id="logout-btn" class="save-btn" style="margin-top: 1rem; max-width: 200px;">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- New Entry Card -->
+            <section class="card new-entry-card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <i class="fas fa-pen-fancy"></i>
+                        New Diary Entry
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="entry-date" class="form-label">
+                            <i class="fas fa-calendar"></i>
+                            Date
+                        </label>
+                        <input type="date" id="entry-date" class="modern-input">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="diary-entry" class="form-label">
+                            <i class="fas fa-edit"></i>
+                            Your Thoughts
+                        </label>
+                        <textarea id="diary-entry" class="modern-textarea" placeholder="Express your feelings, dreams, and memories... Let your heart speak freely."></textarea>
+                        <div class="char-counter" id="char-count">0 characters</div>
+                    </div>
+
+                    <!-- Detect Emotion Button -->
+                    <button id="detect-emotion-btn" class="save-btn" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); margin-bottom: 1.5rem;">
+                        <i class="fas fa-brain"></i>
+                        Detect Emotion
+                    </button>
+
+                    <!-- Mood Selection -->
+                    <div class="mood-section">
+                        <h3 class="mood-title">
+                            <i class="fas fa-smile"></i>
+                            How are you feeling today?
+                        </h3>
+                        <div class="mood-grid">
+                            <div class="mood-option" data-mood="😊" data-name="Happy">
+                                <div class="mood-emoji">😊</div>
+                                <span class="mood-name">Happy</span>
+                            </div>
+                            <div class="mood-option" data-mood="😢" data-name="Sad">
+                                <div class="mood-emoji">😢</div>
+                                <span class="mood-name">Sad</span>
+                            </div>
+                            <div class="mood-option" data-mood="😠" data-name="Angry">
+                                <div class="mood-emoji">😠</div>
+                                <span class="mood-name">Angry</span>
+                            </div>
+                            <div class="mood-option" data-mood="😍" data-name="Love">
+                                <div class="mood-emoji">😍</div>
+                                <span class="mood-name">Love</span>
+                            </div>
+                            <div class="mood-option" data-mood="🤔" data-name="Thoughtful">
+                                <div class="mood-emoji">🤔</div>
+                                <span class="mood-name">Thoughtful</span>
+                            </div>
+                            <div class="mood-option" data-mood="😴" data-name="Tired">
+                                <div class="mood-emoji">😴</div>
+                                <span class="mood-name">Tired</span>
+                            </div>
+                        </div>
+                        <div class="selected-mood-display" id="selected-mood">
+                            <span class="selected-mood-emoji" id="current-mood-emoji">😊</span>
+                            <span class="selected-mood-text" id="current-mood-name">Happy</span>
+                        </div>
+                    </div>
+
+                    <button id="save-entry" class="save-btn">
+                        <i class="fas fa-save"></i>
+                        Save Entry
+                    </button>
+                </div>
+            </section>
+
+            <!-- Right Column -->
+            <div class="right-column">
+                <!-- History Card -->
+                <section class="card history-card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <i class="fas fa-history"></i>
+                            Diary History
+                        </h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="search-container">
+                            <i class="fas fa-search search-icon"></i>
+                            <input type="text" id="search-input" class="search-box" placeholder="Search through your memories...">
+                        </div>
+                        <div class="entries-list" id="entries-list">
+                            <div class="empty-state">
+                                <i class="fas fa-book"></i>
+                                <p>Your diary is waiting for your first entry. Start writing your story!</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Analytics Card -->
+                <section class="card analytics-card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <i class="fas fa-chart-pie"></i>
+                            Mood Analytics
+                        </h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value" id="total-entries">0</div>
+                                <div class="stat-label">Total Entries</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="current-streak">0</div>
+                                <div class="stat-label">Day Streak</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="fav-mood">😊</div>
+                                <div class="stat-label">Top Mood</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="avg-entries">0</div>
+                                <div class="stat-label">Weekly Avg</div>
+                            </div>
+                        </div>
+                        <div class="mood-chart-container">
+                            <h4 class="mood-chart-title">Mood Distribution</h4>
+                            <div class="mood-chart" id="mood-chart">
+                                <div class="empty-state">
+                                    <i class="fas fa-chart-bar"></i>
+                                    <p>Your mood chart will appear here</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Entry Modal -->
+    <div class="modal-overlay" id="entry-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">
+                    <i class="fas fa-book-open"></i>
+                    Diary Entry
+                </h3>
+                <button class="modal-close" id="modal-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-date" id="modal-date" style="color: rgba(255,255,255,0.9); margin-bottom: 1rem; font-weight: 600;"></div>
+                <div id="modal-content" style="color: rgba(255,255,255,0.9); line-height: 1.7; white-space: pre-wrap;"></div>
+                <div class="modal-mood">
+                    <span class="modal-mood-emoji" id="modal-mood-emoji"></span>
+                    <span class="modal-mood-text" id="modal-mood-text"></span>
+                </div>
+                <button id="delete-entry-btn" class="save-btn" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); margin-top: 1.5rem;">
+                    <i class="fas fa-trash"></i>
+                    Delete Entry
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Action Button -->
+    <button class="fab" id="new-entry-fab" title="New Entry">
+        <i class="fas fa-plus"></i>
+    </button>
+
+    <script src="/js/app.js"></script>
+</body>
+</html>

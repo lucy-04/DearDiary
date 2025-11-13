@@ -7,7 +7,8 @@ const {
   createEntry,
   updateEntry,
   deleteEntry,
-  getCalendarEntries
+  getCalendarEntries,
+  detectEmotion
 } = require("../controllers/diartcontroller.js");
 const authMiddleware = require("../middlewatre/authmiddleware.js");
 
@@ -28,5 +29,8 @@ router.get('/:id', getEntry);
 router.post('/', entryValidation, createEntry);
 router.put('/:id', updateEntry);
 router.delete('/:id', deleteEntry);
+
+// Emotion detection endpoint
+router.post('/detect-emotion', [body('text').trim().notEmpty()], detectEmotion);
 
 module.exports = router;
