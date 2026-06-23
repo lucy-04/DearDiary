@@ -10,7 +10,7 @@ const {
   getCalendarEntries,
   detectEmotion,
 } = require("../controllers/diartcontroller.js");
-const authMiddleware = require("../middlewatre/authmiddleware.js");
+const authMiddleware = require("../middleware/authmiddleware.js");
 const validate = require("../utils/validate");
 const { aiLimiter } = require("../utils/rateLimit");
 
