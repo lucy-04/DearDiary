@@ -113,16 +113,13 @@ Recommended host: **[Render](https://render.com)** (free tier works) as one *Web
 Set these environment variables in the host's dashboard (never commit them):
 
 ```
-NODE_ENV=production
 JWT_SECRET=<a long random string>
 JWT_EXPIRES_IN=7d
 DATABASE_URL=<your CockroachDB connection string>
 GEMINI_API_KEY=<your Gemini key>
 ```
 
-`PORT` is provided by the host automatically. To serve under a portfolio subdomain
-(e.g. `diary.yoursite.com`), add it as a custom domain on the host and create the
-`CNAME` record it gives you at your DNS provider.
+`PORT` is provided by the host automatically.
 
 > **Set a spend cap on the Gemini key** in Google AI Studio / Google Cloud billing
 > before going public — the rate limiter bounds abuse, but the billing cap is the
