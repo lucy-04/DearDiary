@@ -1,6 +1,6 @@
 // routes/diaryRoutes.js
-const express = require('express');
-const { body } = require('express-validator');
+const express = require("express");
+const { body } = require("express-validator");
 const {
   getAllEntries,
   getEntry,
@@ -8,9 +8,11 @@ const {
   updateEntry,
   deleteEntry,
   getCalendarEntries,
-  detectEmotion
+  detectEmotion,
 } = require("../controllers/diartcontroller.js");
 const authMiddleware = require("../middlewatre/authmiddleware.js");
+const validate = require("../utils/validate");
+const { aiLimiter } = require("../utils/rateLimit");
 
 const router = express.Router();
 
@@ -18,19 +20,25 @@ const router = express.Router();
 router.use(authMiddleware);
 
 const entryValidation = [
-  body('title').optional().trim().isLength({ max: 200 }),
-  body('content').trim().notEmpty(),
-  body('entry_date').isISO8601()
+  body("title").optional().trim().isLength({ max: 200 }),
+  body("content").trim().notEmpty().isLength({ max: 10000 }),
+  body("entry_date").isISO8601(),
 ];
 
-router.get('/', getAllEntries);
-router.get('/calendar/:year/:month', getCalendarEntries);
-router.get('/:id', getEntry);
-router.post('/', entryValidation, createEntry);
-router.put('/:id', updateEntry);
-router.delete('/:id', deleteEntry);
+router.get("/", getAllEntries);
+router.get("/calendar/:year/:month", getCalendarEntries);
+router.get("/:id", getEntry);
+router.post("/", aiLimiter, entryValidation, validate, createEntry); // calls Gemini
+router.put("/:id", aiLimiter, updateEntry); // calls Gemini
+router.delete("/:id", deleteEntry);
 
-// Emotion detection endpoint
-router.post('/detect-emotion', [body('text').trim().notEmpty()], detectEmotion);
+// Emotion detection preview (calls Gemini)
+router.post(
+  "/detect-emotion",
+  aiLimiter,
+  [body("text").trim().notEmpty().isLength({ max: 10000 })],
+  validate,
+  detectEmotion
+);
 
 module.exports = router;

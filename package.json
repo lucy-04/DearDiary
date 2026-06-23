@@ -6,31 +6,34 @@
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
+    "client": "npm --prefix client run dev",
+    "build": "npm --prefix client install && npm --prefix client run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "diary",
     "emotion-detection",
     "express",
-    "ejs"
+    "react",
+    "gemini"
   ],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
+  "engines": {
+    "node": ">=18"
+  },
   "dependencies": {
-    "axios": "^1.13.1",
+    "@google/generative-ai": "^0.21.0",
     "bcrypt": "^6.0.0",
-    "cockroachdb": "^0.0.1",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
-    "ejs": "^3.1.10",
     "express": "^5.1.0",
+    "express-rate-limit": "^8.5.2",
     "express-validator": "^7.3.0",
     "helmet": "^8.1.0",
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.1",
-    "pg": "^8.16.3",
-    "pg-pool": "^3.10.1",
-    "uuid": "^13.0.0"
+    "pg": "^8.16.3"
   }
 }

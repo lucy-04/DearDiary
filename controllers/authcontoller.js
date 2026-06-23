@@ -77,7 +77,7 @@ exports.login = async (req, res, next) => {
         const isMatch = await bycrypt.compare(password, user.rows[0].password_hash);
 
          if(!isMatch){
-            return res.send(401).json({
+            return res.status(401).json({
                 success: false,
                 message: 'invalid credentials'
             });
