@@ -8,9 +8,10 @@ Most journaling apps capture your words but never the emotional arc behind them.
 
 - **Frontend:** React 18 + Vite, React Router, hand-written CSS design system
 - **Backend:** Node.js + Express (REST API)
-- **Database:** PostgreSQL / CockroachDB (`pg-pool`)
+- **Database:** PostgreSQL / CockroachDB (`pg`, pooled connections)
 - **Auth:** JWT + bcrypt password hashing
 - **AI:** Google Gemini API for emotion classification
+- **Hardening:** Helmet (CSP), CORS, and `express-rate-limit`
 
 ## Features
 
@@ -33,6 +34,21 @@ On save, the entry is sent to the Express API, which asks Gemini for the single 
 that best fits the text, stores the entry with that mood, and serves it back. The
 calendar reads each month's entries and colours every day by its mood. Gemini is only
 ever called server-side, so the API key never reaches the browser.
+
+## Security & abuse protection
+
+Because the app is public-facing and calls a paid AI API, it ships with a few
+safeguards:
+
+- **Secrets stay server-side** — the Gemini and database credentials live only on
+  the server; the browser never sees them.
+- **Passwords are bcrypt-hashed** (salted, one-way), never stored or logged in plain text.
+- **Rate limiting** (`express-rate-limit`) — a general ceiling on the API, with
+  stricter limits on auth (anti brute-force / signup-spam) and the Gemini-backed
+  routes (so the AI bill can't be run up).
+- **Input caps** — request body size and entry length are bounded.
+- **Parameterised SQL** everywhere (no string-concatenated queries → no SQL injection).
+- **Security headers** via Helmet, including a Content-Security-Policy.
 
 ## Getting started
 
