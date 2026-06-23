@@ -114,7 +114,17 @@ GEMINI_API_KEY=<your Gemini key>
 
 ## Screenshots
 
-_Add screenshots of the Write view and the Aurora Calendar here._
+- Login Page
+![login page](image.png)
+
+- Diary Entry Page
+![Diary Entry Page](image-1.png)
+
+- Calender View
+![Calender View](image-2.png)
+
+- PasswordHash Representation;
+![HashValue](image-3.png)
 
 ## Known limitations / what's next
 
