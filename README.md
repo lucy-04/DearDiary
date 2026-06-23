@@ -115,16 +115,16 @@ GEMINI_API_KEY=<your Gemini key>
 ## Screenshots
 
 - Login Page
-![login page](image.png)
+![login page](/images/image.png)
 
 - Diary Entry Page
-![Diary Entry Page](image-1.png)
+![Diary Entry Page](/images/image-1.png)
 
 - Calender View
-![Calender View](image-2.png)
+![Calender View](/images/image-2.png)
 
 - PasswordHash Representation;
-![HashValue](image-3.png)
+![HashValue](/images/image-3.png)
 
 ## Known limitations / what's next
 
